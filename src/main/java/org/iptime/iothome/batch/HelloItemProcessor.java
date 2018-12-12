@@ -11,8 +11,10 @@ public class HelloItemProcessor implements ItemProcessor<String, String>{
 	@Override
 	public String process(String ranger) throws Exception {
 		logger.debug("HelloItemProcessor start ");
+		
+		logger.debug("before : {} ", ranger);
 		ranger += "_modified";
-		logger.debug("report : {} ", ranger);
+		logger.debug("after : {} ", ranger);
 		logger.debug("HelloItemProcessor end ");
 		
 		return ranger;

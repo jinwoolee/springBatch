@@ -5,24 +5,46 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.batch.item.support.AbstractItemCountingItemStreamItemReader;
+import org.springframework.util.ClassUtils;
 
-public class HelloItemReader implements ItemReader<List<String>>{
+public class HelloItemReader extends AbstractItemCountingItemStreamItemReader<String>{
+
 	private Logger logger = LoggerFactory.getLogger(HelloItemReader.class);
+	
+	private List<String> rangers;
+	private int currentItemCount = 0;
+
+	public HelloItemReader() {
+		logger.debug("HelloItemReader consturctor " );
+		setName(ClassUtils.getShortName(HelloItemReader.class));
+	}
+	
+	@Override
+	protected String doRead() throws Exception {
+		logger.debug("HelloItemReader doRead, currentItemCount : {} ", currentItemCount);
+		
+		if(rangers.size() > currentItemCount)
+			return rangers.get(currentItemCount++);
+		else
+			return null;
+	}
 
 	@Override
-	public List<String> read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-		logger.debug("HelloItemReader readItem");
+	protected void doOpen() throws Exception {
 		
-		List<String> rangers = new ArrayList<String>();
+		logger.debug("HelloItemReader doOpen");
+		
+		rangers = new ArrayList<String>();
 		rangers.add("brown");
 		rangers.add("cony");
 		rangers.add("sally");
 		rangers.add("james");
 		rangers.add("moon");
-		return rangers;
+	}
+
+	@Override
+	protected void doClose() throws Exception {
+		logger.debug("HelloItemReader doClose");
 	}
 }
