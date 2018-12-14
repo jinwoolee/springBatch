@@ -4,7 +4,9 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
@@ -37,6 +39,12 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="datasource" />
 	</bean>
+	
+	<jdbc:initialize-database data-source="datasource">
+		
+		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql"/>
+		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>
+	</jdbc:initialize-database>
 
 <!-- 	<tx:advice id="txAdvice"> -->
 <!-- 		<tx:attributes> -->
@@ -49,3 +57,4 @@
 <!-- 			pointcut="execution(* org.iptime.iothome..*.*(..))" /> -->
 <!-- 	</aop:config> -->
 </beans>
+
