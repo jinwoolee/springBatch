@@ -13,6 +13,7 @@
 							 commit-interval="2" >
 							 <batch:listeners >
 							 	<batch:listener ref="helloStepExecutionListener"/>
+							 	<batch:listener ref="helloChunkListener"/>
 							 </batch:listeners>
 				</batch:chunk>
 			</batch:tasklet>
@@ -24,5 +25,7 @@
 	<bean id="helloItemWriter" class="org.iptime.iothome.batch.HelloItemWriter"/>
 	
 	<bean id="helloStepExecutionListener" class="org.iptime.iothome.batch.listener.HelloStepExecutionListener"/>
+	<bean id="helloChunkListener" class="org.iptime.iothome.batch.listener.HelloChunkListener"/>
+	
 
 </beans>
