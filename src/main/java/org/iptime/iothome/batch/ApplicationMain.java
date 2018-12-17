@@ -2,6 +2,7 @@ package org.iptime.iothome.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -20,7 +21,7 @@ public class ApplicationMain {
 		Job helloJob = context.getBean("helloWorldJob", Job.class);
 		
 		try {
-			launcher.run(helloJob, new JobParameters());
+			launcher.run(helloJob, new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters());
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
 			e.printStackTrace();
 		}

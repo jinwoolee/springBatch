@@ -5,9 +5,11 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:batch="http://www.springframework.org/schema/batch"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
@@ -16,23 +18,28 @@
 		<property name="databaseType" value="Oracle"/>
 		<property name="dataSource" ref="datasource"/>
 		<property name="transactionManager" ref="transactionManager"/>
+		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
+		
 	</bean>
 <!-- 	<batch:job-repository data-source="datasource"  /> -->
 
 
-
+	<context:property-placeholder location="classpath:org/iptime/iothome/config/spring/db.properties"/>
 
 	<bean id="jobLauncher"
 		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-		<property name="jobRepository" ref="jobRepository"/> 
+		<property name="jobRepository" ref="jobRepository"/>
+<!-- 		<property name="taskExecutor"> -->
+<!-- 			<bean class="org.springframework.core.task.SimpleAsyncTaskExecutor"/> -->
+<!-- 		</property>  -->
 	</bean>
 
 	<bean id="datasource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="username" value="sem" />
-		<property name="password" value="java" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<bean id="transactionManager"
@@ -40,8 +47,8 @@
 		<property name="dataSource" ref="datasource" />
 	</bean>
 	
-	<jdbc:initialize-database data-source="datasource">
-		
+	<jdbc:initialize-database data-source="datasource" enabled="false">
+		<jdbc:script location="classpath:/org/iptime/iothome/data/sampleData.sql"/>
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql"/>
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>
 	</jdbc:initialize-database>
