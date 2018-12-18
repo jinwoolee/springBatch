@@ -9,10 +9,11 @@
 	
 	<typeAliases>
 		<!--board VO -->
-		<typeAlias type="org.iptime.iothome.batch.model.CustomerVo" alias="customerVo"/>  
+		<typeAlias type="org.iptime.iothome.batch.model.CustomerVo" alias="customerVo"/>
+		<typeAlias type="org.iptime.iothome.batch.model.CycleVo" alias="cycleVo"/>  
     </typeAliases>
     
     <mappers>
-		<mapper resource="/org/iptime/iothome/config/mybatis/batch.xml"/>
+		<mapper resource="org/iptime/iothome/config/mybatis/batch.xml"/>
 	</mappers>
 </configuration>

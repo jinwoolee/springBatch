@@ -13,7 +13,21 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-
+    <context:annotation-config/>
+    <context:component-scan base-package="org.iptime.iothome" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="datasource"/>
+        <property name="configLocation" value="classpath:/org/iptime/iothome/config/mybatis/mybatis-config.xml"/>
+    </bean>
+    
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    
 <!-- 	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
 		<property name="databaseType" value="Oracle"/>
 		<property name="dataSource" ref="datasource"/>
@@ -50,8 +64,8 @@
 		<property name="dataSource" ref="datasource" />
 	</bean>
 	
-	<jdbc:initialize-database data-source="datasource" enabled="false">
-		<jdbc:script location="classpath:/org/iptime/iothome/data/sampleData.sql"/>
+	<jdbc:initialize-database data-source="datasource" enabled="true">
+<!-- 		<jdbc:script location="classpath:/org/iptime/iothome/data/sampleData.sql"/> -->
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql"/>
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>
 	</jdbc:initialize-database>
@@ -64,7 +78,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* org.iptime.iothome..*.*(..))" />
+			pointcut="execution(* org.iptime.iothome..*Service.*(..))" />
 	</aop:config>
 </beans>
 
