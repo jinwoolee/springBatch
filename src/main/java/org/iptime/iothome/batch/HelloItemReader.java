@@ -26,8 +26,10 @@ public class HelloItemReader extends AbstractItemCountingItemStreamItemReader<St
 		
 		if(rangers.size() > currentItemCount)
 			return rangers.get(currentItemCount++);
-		else
+		else {
+			currentItemCount = 0;
 			return null;
+		}
 	}
 
 	@Override

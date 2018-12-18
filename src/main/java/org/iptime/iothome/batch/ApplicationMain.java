@@ -20,8 +20,11 @@ public class ApplicationMain {
 		JobLauncher launcher = context.getBean("jobLauncher", JobLauncher.class);
 		Job helloJob = context.getBean("helloWorldJob", Job.class);
 		
+		Job helloTasklet = context.getBean("helloWorldTasklet", Job.class);
+		
 		try {
 			launcher.run(helloJob, new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters());
+			launcher.run(helloTasklet, new JobParameters());
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
 			e.printStackTrace();
 		}
