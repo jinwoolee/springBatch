@@ -7,6 +7,6 @@ public class DailyVo {
 
     private Integer cid;
     private Integer pid;
-    private String day;
+    private String dt;
     private Integer cnt;
 }

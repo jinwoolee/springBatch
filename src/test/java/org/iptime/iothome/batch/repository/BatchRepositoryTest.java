@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.iptime.iothome.batch.model.CycleVo;
+import org.iptime.iothome.batch.model.DailyVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -42,6 +43,22 @@ public class BatchRepositoryTest {
         
         /***then***/
         assertEquals(15, cycleList.size());
+    }
+    
+    @Test
+    public void testMergeDaily() {
+    	/***given***/
+		DailyVo dailyVo = new DailyVo();
+		dailyVo.setCid(1);
+		dailyVo.setPid(100);
+		dailyVo.setDt("20181219");
+		dailyVo.setCnt(5);
+
+		/***when***/
+		int mergeCnt = batchRepository.mergeDaily(dailyVo);
+
+		/***then***/
+		assertEquals(1, mergeCnt);
     }
 
 }

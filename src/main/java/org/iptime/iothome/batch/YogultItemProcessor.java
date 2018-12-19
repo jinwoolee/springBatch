@@ -29,26 +29,24 @@ public class YogultItemProcessor implements ItemProcessor<CycleVo, List<DailyVo>
 		
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		
-		
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		List<DailyVo> dailyVoList = new ArrayList<DailyVo>();
 		
-		while(endDate.after(calendar.getTime())) {
+		while(endDate.getTime() >= calendar.getTimeInMillis() ) {
 			
+			if(cycleVo.getDay().equals(calendar.get(Calendar.DAY_OF_WEEK))) {
+				DailyVo dailyVo = new DailyVo();
+				dailyVo.setCid(cycleVo.getCid());
+				dailyVo.setPid(cycleVo.getPid());
+				dailyVo.setCnt(cycleVo.getCnt());
+				dailyVo.setDt(sdf.format(calendar.getTime()));
+				dailyVoList.add(dailyVo);
+				
+				logger.debug(sdf.format(calendar.getTime()));
+			}
 			
-			
-			DailyVo dailyVo = new DailyVo();
-			dailyVo.setCid(cycleVo.getCid());
-			dailyVo.setPid(cycleVo.getPid());
-			dailyVo.setCnt(cycleVo.getCnt());
-			//dailyVo.setDay(sdf.format(startDate));
-			dailyVoList.add(dailyVo);
-			
-			//logger.debug(sdf.format(startDate));
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) +1);
-		
 		}
 		
 		return dailyVoList;

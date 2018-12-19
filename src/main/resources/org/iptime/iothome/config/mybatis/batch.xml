@@ -7,6 +7,18 @@
     <select id="getCycleList" resultType="cycleVo">
         select *
           from cycle
-        order by cid, pid
     </select>
+    
+    <insert id="mergeDaily" parameterType="dailyVo">
+    	merge into daily
+    	  using dual 
+    	    on (daily.cid = #{cid} and
+    	        daily.pid = #{pid} and
+    	        daily.dt = #{dt})
+    	  when matched then update set
+    	  	cnt = #{cnt}
+    	  when not matched then insert  
+    	   		   (cid, pid, dt, cnt)  
+    	   	values (#{cid}, #{pid}, #{dt}, #{cnt}) 
+    </insert>
 </mapper>

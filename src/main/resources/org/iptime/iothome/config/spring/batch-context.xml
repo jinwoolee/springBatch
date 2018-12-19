@@ -30,15 +30,23 @@
 		</batch:step>		
 	</batch:job>
 	
-	
-	
 	<bean id="yogultItemReader" class="org.mybatis.spring.batch.MyBatisCursorItemReader" >
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 		<property name="queryId" value="batch.getCycleList"/>
 	</bean>
 	
 	<bean id="yogultItemProcessor" class="org.iptime.iothome.batch.YogultItemProcessor"/>
-	<bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"/>
+	
+	<!-- <bean id="yogultItemWriter" class="org.mybatis.spring.batch.MyBatisBatchItemWriter">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+		<property name="statementId" value="batch.mergeDaily"/>
+ 		</bean> -->
+	
+	
+<!-- 	<bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"> -->
+<!-- 		<property name="batchRepository" ref="batchRepository"/> -->
+<!-- 	</bean> -->
 
 	
 <!-- 	<bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/> -->
