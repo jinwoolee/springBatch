@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"classpath:/org/iptime/iothome/config/spring/context.xml",
-                                  "classpath:/org/iptime/iothome/config/spring/batch.xml"})
+                                  "classpath:/org/iptime/iothome/config/spring/batch-context.xml"})
 public class BatchRepositoryTest {
     private Logger logger = LoggerFactory.getLogger(BatchRepositoryTest.class);
     

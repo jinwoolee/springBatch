@@ -15,16 +15,14 @@ public class ApplicationMain {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 					new String[] {"classpath:/org/iptime/iothome/config/spring/context.xml",
-								  "classpath:/org/iptime/iothome/config/spring/batch.xml"});
+								  "classpath:/org/iptime/iothome/config/spring/batch-context.xml"});
 		
 		JobLauncher launcher = context.getBean("jobLauncher", JobLauncher.class);
-		Job helloJob = context.getBean("helloWorldJob", Job.class);
-		
-		Job helloTasklet = context.getBean("helloWorldTasklet", Job.class);
+		Job yogultMotnhlyCycleJob = context.getBean("yogultMotnhlyCycleJob", Job.class);
 		
 		try {
-			launcher.run(helloJob, new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters());
-			launcher.run(helloTasklet, new JobParameters());
+			launcher.run(yogultMotnhlyCycleJob, new JobParameters());
+		
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
 			e.printStackTrace();
 		}

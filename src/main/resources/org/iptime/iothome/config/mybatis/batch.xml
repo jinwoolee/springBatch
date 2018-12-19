@@ -7,5 +7,6 @@
     <select id="getCycleList" resultType="cycleVo">
         select *
           from cycle
+        order by cid, pid
     </select>
 </mapper>

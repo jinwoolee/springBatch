@@ -1,6 +1,6 @@
 package org.iptime.iothome.batch.listener;
 
-import org.iptime.iothome.batch.HelloItemProcessor;
+import org.iptime.iothome.batch.YogultItemProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ChunkListener;
