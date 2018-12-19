@@ -42,12 +42,10 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 		<property name="statementId" value="batch.mergeDaily"/>
  		</bean> -->
-	
-	
-<!-- 	<bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"> -->
-<!-- 		<property name="batchRepository" ref="batchRepository"/> -->
-<!-- 	</bean> -->
 
+	<bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter">
+		<property name="batchRepository" ref="batchRepository"/>
+	</bean>
 	
 <!-- 	<bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/> -->
 	
