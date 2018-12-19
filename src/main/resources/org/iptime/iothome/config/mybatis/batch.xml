@@ -21,4 +21,13 @@
     	   		   (cid, pid, dt, cnt)  
     	   	values (#{cid}, #{pid}, #{dt}, #{cnt}) 
     </insert>
+    
+    <insert id="insertAllDaily" parameterType="list">
+    	insert all 
+    		<foreach collection="list" item="vo">
+    			into daily values (#{vo.cid}, #{vo.pid}, #{vo.dt}, #{vo.cnt})
+    		</foreach>
+    		select *
+    		  from dual
+    </insert>
 </mapper>
