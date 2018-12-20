@@ -65,7 +65,7 @@
 		<property name="dataSource" ref="datasource" />
 	</bean>
 	
-	<jdbc:initialize-database data-source="datasource" enabled="true">
+	<jdbc:initialize-database data-source="datasource" enabled="false">
 <!-- 		<jdbc:script location="classpath:/org/iptime/iothome/data/sampleData.sql"/> -->
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql"/>
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>

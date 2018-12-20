@@ -20,8 +20,8 @@
 
 
 	<!-- chunck -->
-	<batch:job id="yogultMotnhlyCycleJob" restartable="false">
-		<batch:step id="step1" allow-start-if-complete="false">
+	<batch:job id="yogultMotnhlyCycleJob" restartable="true">
+		<batch:step id="step1" allow-start-if-complete="true">
 			<batch:tasklet>
 				<batch:chunk reader="yogultItemReader"
 					processor="yogultItemProcessor" writer="yogultItemWriter"
@@ -41,17 +41,14 @@
 		class="org.iptime.iothome.batch.YogultItemProcessor" />
 
 	<bean id="yogultItemWriter"
-		class="org.mybatis.spring.batch.MyBatisBatchItemWriter">
+		class="org.iptime.iothome.batch.CustomMyBatisBatchItemWriter">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-<!-- 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" /> -->
-		<property name="statementId" value="batch.insertAllDaily" />
+		<property name="statementId" value="batch.mergeDaily" />
 	</bean>
 
 	<!-- <bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"> 
 		<property name="batchRepository" ref="batchRepository"/> </bean> -->
 
 	<!-- <bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/> -->
-
-	<context:annotation-config />
 
 </beans>
