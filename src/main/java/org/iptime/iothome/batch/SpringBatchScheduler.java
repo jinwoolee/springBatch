@@ -18,25 +18,17 @@ public class SpringBatchScheduler {
 	private JobLauncher launcher;
 	
 	@Autowired
-	@Qualifier("helloWorldJob")
-	private Job helloJob;
+	@Qualifier("yogultMotnhlyCycleJob")
+	private Job yogultMonthlyCucleJob;
 	
-	@Autowired
-	@Qualifier("helloWorldTasklet")
-	private Job helloTasklet;
-	
-	
-	@Scheduled( cron="*/5 * * * * *")
+	@Scheduled( cron="* * * 1 * *")
 	public void run() {
 		
 		logger.debug("=====================SpringBatchScheduler run=====================");
-		logger.debug("launcer : {}", launcher);
-		logger.debug("helloJob : {}", helloJob);
-		logger.debug("helloTasklet : {}", helloTasklet);
-		
+				
 		try {
-			launcher.run(helloJob, new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters());
-			launcher.run(helloTasklet, new JobParameters());
+			launcher.run(yogultMonthlyCucleJob, new JobParameters());
+		
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -22,8 +22,6 @@ public class YogultItemProcessor implements ItemProcessor<CycleVo, List<DailyVo>
 		logger.debug("itemProcessor process : {}", cycleVo);
 		
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2018);
-		calendar.set(Calendar.MONTH, 11);
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 		Date endDate = calendar.getTime();
 		
