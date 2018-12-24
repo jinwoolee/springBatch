@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.item.support.AbstractItemCountingItemStreamItemReader;
-import org.springframework.util.ClassUtils;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.NonTransientResourceException;
+import org.springframework.batch.item.ParseException;
+import org.springframework.batch.item.UnexpectedInputException;
 
-public class HelloItemReader extends AbstractItemCountingItemStreamItemReader<String>{
+public class HelloItemReader implements ItemReader<String>{
 
 	private Logger logger = LoggerFactory.getLogger(HelloItemReader.class);
 	
@@ -17,24 +19,7 @@ public class HelloItemReader extends AbstractItemCountingItemStreamItemReader<St
 
 	public HelloItemReader() {
 		logger.debug("HelloItemReader consturctor " );
-		setName(ClassUtils.getShortName(HelloItemReader.class));
-	}
-	
-	@Override
-	protected String doRead() throws Exception {
-		logger.debug("HelloItemReader doRead, currentItemCount : {} ", currentItemCount);
-		
-		if(rangers.size() > currentItemCount)
-			return rangers.get(currentItemCount++);
-		else
-			return null;
-	}
 
-	@Override
-	protected void doOpen() throws Exception {
-		
-		logger.debug("HelloItemReader doOpen");
-		
 		rangers = new ArrayList<String>();
 		rangers.add("brown");
 		rangers.add("cony");
@@ -44,7 +29,11 @@ public class HelloItemReader extends AbstractItemCountingItemStreamItemReader<St
 	}
 
 	@Override
-	protected void doClose() throws Exception {
-		logger.debug("HelloItemReader doClose");
+	public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+		logger.debug("read currentItemCount : {} ", currentItemCount);
+		if(rangers.size() > currentItemCount)
+			return rangers.get(currentItemCount++);
+		else
+			return null;
 	}
 }
