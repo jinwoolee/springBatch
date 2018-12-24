@@ -33,7 +33,9 @@ public class HelloItemReader implements ItemReader<String>{
 		logger.debug("read currentItemCount : {} ", currentItemCount);
 		if(rangers.size() > currentItemCount)
 			return rangers.get(currentItemCount++);
-		else
+		else {
+			currentItemCount = 0;
 			return null;
+		}
 	}
 }
