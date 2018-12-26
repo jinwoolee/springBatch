@@ -24,4 +24,9 @@ public class BatchRepositoryImpl implements BatchRepository {
 		return sqlSessionTemplate.insert("batch.mergeDaily", dailyVo);
 	}
 
+    @Override
+    public int dailyBatchOneQuery(String ym) {
+        return 0;
+    }
+
 }

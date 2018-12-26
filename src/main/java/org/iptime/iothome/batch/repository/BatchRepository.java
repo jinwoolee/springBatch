@@ -11,4 +11,6 @@ public interface BatchRepository {
 
 	int mergeDaily(DailyVo dailyVo);
 
+    int dailyBatchOneQuery(String ym);
+
 }

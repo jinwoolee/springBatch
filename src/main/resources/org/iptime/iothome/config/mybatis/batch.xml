@@ -3,31 +3,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="batch">
-    
-    <select id="getCycleList" resultType="cycleVo">
-        select *
-          from cycle
-    </select>
-    
-    <insert id="mergeDaily" parameterType="dailyVo">
-    	merge into daily
-    	  using dual 
-    	    on (daily.cid = #{cid} and
-    	        daily.pid = #{pid} and
-    	        daily.dt = #{dt})
-    	  when matched then update set
-    	  	cnt = #{cnt}
-    	  when not matched then insert  
-    	   		   (cid, pid, dt, cnt)  
-    	   	values (#{cid}, #{pid}, #{dt}, #{cnt}) 
-    </insert>
-    
-    <insert id="insertAllDaily" parameterType="list">
-    	insert all 
-    		<foreach collection="list" item="vo">
-    			into daily values (#{vo.cid}, #{vo.pid}, #{vo.dt}, #{vo.cnt})
-    		</foreach>
-    		select *
-    		  from dual
-    </insert>
+
+	<select id="getCycleList" resultType="cycleVo">
+		select *
+		from cycle
+	</select>
+
+	<insert id="mergeDaily" parameterType="dailyVo">
+		merge into daily
+		using dual
+		on (daily.cid = #{cid} and
+		daily.pid = #{pid} and
+		daily.dt = #{dt})
+		when matched then update set
+		cnt = #{cnt}
+		when not matched then insert
+		(cid, pid, dt, cnt)
+		values (#{cid}, #{pid}, #{dt}, #{cnt})
+	</insert>
+
+	<insert id="insertAllDaily" parameterType="list">
+		insert all
+		<foreach collection="list" item="vo">
+			into daily values (#{vo.cid}, #{vo.pid}, #{vo.dt}, #{vo.cnt})
+		</foreach>
+		select *
+		from dual
+	</insert>
+
+	<insert id="dailyBatchOneQuery" parameterType="string">
+		insert into daily
+
+		select cycle.cid, cycle.pid, cal.dt, cycle.cnt
+		from cycle,
+			(select to_char(to_date( #{ym} || '01', 'yyyyMMdd') + (level-1), 'yyyyMMdd') as dt,
+			        to_char(to_date(#{ym} || '01', 'yyyyMMdd') + (level-1), 'd') as day
+			  from dual
+			connect by level &lt;= last_day(to_date(#{ym}, 'yyyymm')) - (to_date(#{ym}, 'yyyymm')-1)) cal
+		where cycle.day = cal.day
+	</insert>
 </mapper>

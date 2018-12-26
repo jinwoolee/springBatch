@@ -60,5 +60,17 @@ public class BatchRepositoryTest {
 		/***then***/
 		assertEquals(1, mergeCnt);
     }
+    
+    @Test
+    public void testDailyBatchOneQuery() {
+        /***given***/
+        String ym = "201812";
+        
+        /***when***/
+        int insertCnt = batchRepository.dailyBatchOneQuery(ym);
+
+        /***then***/
+        assertEquals(63, insertCnt);
+    }
 
 }
