@@ -2,11 +2,17 @@ package org.iptime.iothome.batch.service;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.sql.DataSource;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,6 +25,17 @@ public class BatchServiceTest {
     
     @Autowired
     private BatchService batchService;
+    
+    @Autowired
+    private DataSource dataSource;
+    
+    @Before
+	public void setup() {
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScript(new ClassPathResource("/org/iptime/iothome/data/initBatchData.sql" ));
+		populator.setContinueOnError(true);
+		DatabasePopulatorUtils.execute(populator , dataSource);
+	}
     
 	@Test
     public void testDailyBatchOneQuery() {

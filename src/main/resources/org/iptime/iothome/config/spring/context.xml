@@ -28,8 +28,6 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
-    
-
 
 	<context:property-placeholder location="classpath:org/iptime/iothome/config/spring/db.properties"/>
 
@@ -45,10 +43,6 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="datasource" />
 	</bean>
-	
-	<jdbc:initialize-database data-source="datasource" enabled="true">
- 		<jdbc:script location="classpath:/org/iptime/iothome/data/initBatchData.sql"/>
-	</jdbc:initialize-database>
 
 	<tx:advice id="txAdvice">
 		<tx:attributes>
