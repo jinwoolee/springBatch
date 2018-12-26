@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameter;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +29,10 @@ public class YogultMotnhlyCycleJobTest {
 	@Test
 	public void testYogultMotnhlyCycleJob() throws Exception {
 		/***given***/
+		JobParameters jobParameters = new JobParametersBuilder().addParameter("ym",  new JobParameter("201901")).toJobParameters();
 		
 		/***when***/
-		JobExecution jobExecution = jobLauncherTestUtils.launchJob();
+		JobExecution jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
 		
 		/***then***/
 		assertEquals(new ExitStatus("COMPLETED"), jobExecution.getExitStatus());

@@ -34,11 +34,11 @@
 	<bean id="yogultItemReader"
 		class="org.mybatis.spring.batch.MyBatisCursorItemReader">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="queryId" value="batch.getCycleList" />
+		<property name="queryId" value="batch.getCycleList"/>
 	</bean>
 
 	<bean id="yogultItemProcessor"
-		class="org.iptime.iothome.batch.YogultItemProcessor" />
+		class="org.iptime.iothome.batch.YogultItemProcessor" scope="step"/>
 
 	<bean id="yogultItemWriter"
 		class="org.iptime.iothome.batch.CustomMyBatisBatchItemWriter">
@@ -46,9 +46,6 @@
 		<property name="statementId" value="batch.mergeDaily" />
 	</bean>
 
-	<!-- <bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"> 
-		<property name="batchRepository" ref="batchRepository"/> </bean> -->
-
-	<!-- <bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/> -->
+	<bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/>
 
 </beans>

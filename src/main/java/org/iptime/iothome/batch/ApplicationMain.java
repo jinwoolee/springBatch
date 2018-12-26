@@ -1,6 +1,9 @@
 package org.iptime.iothome.batch;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
@@ -21,7 +24,12 @@ public class ApplicationMain {
 		Job yogultMotnhlyCycleJob = context.getBean("yogultMotnhlyCycleJob", Job.class);
 		
 		try {
-			launcher.run(yogultMotnhlyCycleJob, new JobParameters());
+			//launcher.run(yogultMotnhlyCycleJob, new JobParameters());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+			
+			launcher.run(yogultMotnhlyCycleJob, 
+					new JobParametersBuilder().addParameter("ym", new JobParameter(sdf.format(System.currentTimeMillis())))
+											  .addLong("st_dt", System.currentTimeMillis()).toJobParameters());
 		
 		} catch (JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
 			e.printStackTrace();

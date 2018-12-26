@@ -36,11 +36,10 @@
 		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>		
 	 	</bean> -->
 
- 		<batch:job-repository id="jobRepository" 
- 			data-source="datasource" 
- 			transaction-manager="transactionManager" 
- 			isolation-level-for-create="DEFAULT"/>
-
+	<batch:job-repository id="jobRepository" 
+		data-source="datasource" 
+		transaction-manager="transactionManager" 
+		isolation-level-for-create="DEFAULT"/>
 
 	<context:property-placeholder location="classpath:org/iptime/iothome/config/spring/db.properties"/>
 
@@ -71,15 +70,5 @@
 		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>
 	</jdbc:initialize-database>
 
-<!-- 	<tx:advice id="txAdvice"> -->
-<!-- 		<tx:attributes> -->
-<!-- 			<tx:method name="*" propagation="REQUIRED" /> -->
-<!-- 		</tx:attributes> -->
-<!-- 	</tx:advice> -->
-
-<!-- 	<aop:config> -->
-<!-- 		<aop:advisor advice-ref="txAdvice" -->
-<!-- 			pointcut="execution(* org.iptime.iothome..*Service.*(..))" /> -->
-<!-- 	</aop:config> -->
 </beans>
 

@@ -10,16 +10,23 @@ import org.iptime.iothome.batch.model.CycleVo;
 import org.iptime.iothome.batch.model.DailyVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Value;
 
+//@StepScope
 public class YogultItemProcessor implements ItemProcessor<CycleVo, List<DailyVo>>{
 	
 	private Logger logger = LoggerFactory.getLogger(YogultItemProcessor.class);
 	 
+	@Value("#{jobParameters[ym]}")
+	private String ym;
+	
 	@Override
 	public List<DailyVo> process(CycleVo cycleVo) throws Exception {
 		
 		logger.debug("itemProcessor process : {}", cycleVo);
+		logger.debug("jobparameter ym : {} ", ym );
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
