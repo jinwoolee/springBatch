@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations= {"classpath:/org/iptime/iothome/config/spring/context.xml",
                                   "classpath:/org/iptime/iothome/config/spring/batch-context.xml",
                                   "classpath:/org/iptime/iothome/config/spring/batch-test-context.xml"})
-@EnableBatchProcessing
 public class YogultMotnhlyCycleJobTest {
 	
 	private Logger logger = LoggerFactory.getLogger(YogultMotnhlyCycleJobTest.class);
