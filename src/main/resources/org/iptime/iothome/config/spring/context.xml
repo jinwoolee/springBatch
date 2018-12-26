@@ -29,28 +29,9 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
     
-<!-- 	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-		<property name="databaseType" value="Oracle"/>
-		<property name="dataSource" ref="datasource"/>
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>		
-	 	</bean> -->
-
- 		<batch:job-repository id="jobRepository" 
- 			data-source="datasource" 
- 			transaction-manager="transactionManager" 
- 			isolation-level-for-create="DEFAULT"/>
 
 
 	<context:property-placeholder location="classpath:org/iptime/iothome/config/spring/db.properties"/>
-
-	<bean id="jobLauncher"
-		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-		<property name="jobRepository" ref="jobRepository"/>
-<!-- 		<property name="taskExecutor"> -->
-<!-- 			<bean class="org.springframework.core.task.SimpleAsyncTaskExecutor"/> -->
-<!-- 		</property>  -->
-	</bean>
 
 	<bean id="datasource"
 		class="org.apache.commons.dbcp2.BasicDataSource">
@@ -65,21 +46,19 @@
 		<property name="dataSource" ref="datasource" />
 	</bean>
 	
-	<jdbc:initialize-database data-source="datasource" enabled="false">
-<!-- 		<jdbc:script location="classpath:/org/iptime/iothome/data/sampleData.sql"/> -->
-		<jdbc:script location="classpath:/org/springframework/batch/core/schema-drop-oracle10g.sql"/>
-		<jdbc:script location="classpath:/org/springframework/batch/core/schema-oracle10g.sql"/>
+	<jdbc:initialize-database data-source="datasource" enabled="true">
+ 		<jdbc:script location="classpath:/org/iptime/iothome/data/initBatchData.sql"/>
 	</jdbc:initialize-database>
 
-<!-- 	<tx:advice id="txAdvice"> -->
-<!-- 		<tx:attributes> -->
-<!-- 			<tx:method name="*" propagation="REQUIRED" /> -->
-<!-- 		</tx:attributes> -->
-<!-- 	</tx:advice> -->
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
 
-<!-- 	<aop:config> -->
-<!-- 		<aop:advisor advice-ref="txAdvice" -->
-<!-- 			pointcut="execution(* org.iptime.iothome..*Service.*(..))" /> -->
-<!-- 	</aop:config> -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* org.iptime.iothome..*Service.*(..))" />
+	</aop:config>
 </beans>
 

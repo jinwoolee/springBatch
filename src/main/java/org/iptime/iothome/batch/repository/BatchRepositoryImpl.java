@@ -2,6 +2,7 @@ package org.iptime.iothome.batch.repository;
 
 import java.util.List;
 
+import org.iptime.iothome.batch.model.BatchVo;
 import org.iptime.iothome.batch.model.CycleVo;
 import org.iptime.iothome.batch.model.DailyVo;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,7 +27,17 @@ public class BatchRepositoryImpl implements BatchRepository {
 
     @Override
     public int dailyBatchOneQuery(String ym) {
-        return 0;
+    	return sqlSessionTemplate.insert("batch.dailyBatchOneQuery", ym);
     }
+
+	@Override
+	public int startBatchJobStart(BatchVo batchVo) {
+		return sqlSessionTemplate.insert("batch.startBatchJob", batchVo);
+	}
+
+	@Override
+	public int endBatchJobStart(BatchVo batchVo) {
+		return sqlSessionTemplate.insert("batch.endBatchJob", batchVo);
+	}
 
 }

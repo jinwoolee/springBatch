@@ -12,6 +12,7 @@
 		<typeAlias type="org.iptime.iothome.batch.model.CustomerVo" alias="customerVo"/>
 		<typeAlias type="org.iptime.iothome.batch.model.CycleVo" alias="cycleVo"/>  
 		<typeAlias type="org.iptime.iothome.batch.model.DailyVo" alias="dailyVo"/>
+		<typeAlias type="org.iptime.iothome.batch.model.BatchVo" alias="batchVo"/>
     </typeAliases>
     
     <mappers>

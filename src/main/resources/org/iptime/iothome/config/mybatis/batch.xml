@@ -42,4 +42,18 @@
 			connect by level &lt;= last_day(to_date(#{ym}, 'yyyymm')) - (to_date(#{ym}, 'yyyymm')-1)) cal
 		where cycle.day = cal.day
 	</insert>
+	
+	<insert id="startBatchJob" parameterType="batchVo">
+		<selectKey keyProperty="bid" order="BEFORE" resultType="integer">
+			select seq_batch.nextval from dual
+		</selectKey>
+		insert into batch (bid, bcd, st, st_dt)
+		  values (#{bid}, #{bcd}, #{st}, sysdate)
+	</insert>
+	
+	<insert id="endBatchJob" parameterType="batchVo">
+		update batch set st = #{st}, ed_dt = sysdate
+		 where bid = #{bid}
+	</insert>
+	
 </mapper>

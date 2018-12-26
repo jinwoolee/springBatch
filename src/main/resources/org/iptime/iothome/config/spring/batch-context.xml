@@ -18,37 +18,4 @@
 	<task:annotation-driven executor="executor"
 		scheduler="scheduler" />
 
-
-	<!-- chunck -->
-	<batch:job id="yogultMotnhlyCycleJob" restartable="true">
-		<batch:step id="step1" allow-start-if-complete="true">
-			<batch:tasklet>
-				<batch:chunk reader="yogultItemReader"
-					processor="yogultItemProcessor" writer="yogultItemWriter"
-					commit-interval="2">
-				</batch:chunk>
-			</batch:tasklet>
-		</batch:step>
-	</batch:job>
-
-	<bean id="yogultItemReader"
-		class="org.mybatis.spring.batch.MyBatisCursorItemReader">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="queryId" value="batch.getCycleList" />
-	</bean>
-
-	<bean id="yogultItemProcessor"
-		class="org.iptime.iothome.batch.YogultItemProcessor" />
-
-	<bean id="yogultItemWriter"
-		class="org.iptime.iothome.batch.CustomMyBatisBatchItemWriter">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="statementId" value="batch.mergeDaily" />
-	</bean>
-
-	<!-- <bean id="yogultItemWriter" class="org.iptime.iothome.batch.YogultItemWriter"> 
-		<property name="batchRepository" ref="batchRepository"/> </bean> -->
-
-	<!-- <bean id="springBatchScheduler" class="org.iptime.iothome.batch.SpringBatchScheduler"/> -->
-
 </beans>

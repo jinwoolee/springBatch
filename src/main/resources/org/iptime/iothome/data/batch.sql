@@ -4,6 +4,11 @@ drop table daily;
 drop table cycle;
 drop table product;
 drop table customer;
+
+drop sequence SEQ_BATCH;
+
+CREATE SEQUENCE SEQ_BATCH  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
 /* 고객 */
 CREATE TABLE CUSTOMER (
 	CID NUMBER NOT NULL, /* 고객번호 */

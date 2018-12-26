@@ -1,1 +1,0 @@
-select * from not_exist_stable;

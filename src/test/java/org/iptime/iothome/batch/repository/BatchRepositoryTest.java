@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.iptime.iothome.batch.model.BatchVo;
 import org.iptime.iothome.batch.model.CycleVo;
 import org.iptime.iothome.batch.model.DailyVo;
 import org.junit.Test;
@@ -71,6 +72,36 @@ public class BatchRepositoryTest {
 
         /***then***/
         assertEquals(63, insertCnt);
+    }
+    
+    @Test
+    public void testStartBatchJob() {
+    	/***given***/
+		BatchVo batchVo = new BatchVo();
+		batchVo.setBcd("01");	//일실적 생성배치
+		batchVo.setSt("01");	//배치 상태 : 시작
+
+		/***when***/
+		int insertCnt = batchRepository.startBatchJobStart(batchVo);
+
+		/***then***/
+		assertEquals(1, insertCnt);
+    }
+    
+    @Test
+    public void testEndBatchJobS() {
+    	/***given***/
+		BatchVo batchVo = new BatchVo();
+		batchVo.setBcd("01");	//일실적 생성배치
+		batchVo.setSt("01");	//배치 상태 : 시작
+		batchRepository.startBatchJobStart(batchVo);
+
+		/***when***/
+		batchVo.setSt("02");	//배치 상태 : 종료
+		int updateCnt = batchRepository.endBatchJobStart(batchVo);
+
+		/***then***/
+		assertEquals(1, updateCnt);
     }
 
 }
