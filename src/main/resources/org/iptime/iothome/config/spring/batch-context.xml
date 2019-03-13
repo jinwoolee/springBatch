@@ -31,12 +31,22 @@
 		</batch:step>
 	</batch:job>
 
+	<!-- jobParameter를 사용해야하는 bean의 경우
+	     spEl 사용을 위해 scope를 step으로 설정해야함-->
 	<bean id="yogultItemReader"
-		class="org.mybatis.spring.batch.MyBatisCursorItemReader">
+		class="org.mybatis.spring.batch.MyBatisCursorItemReader" 
+		scope="step">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="queryId" value="batch.getCycleList"/>
+		<property name="parameterValues">
+			<map>
+				<entry key="ym" value="#{jobParameters[ym]}"/>
+			</map>
+		</property> 
 	</bean>
 
+	<!-- jobParameter를 사용해야하는 bean의 경우
+	     spEl 사용을 위해 scope를 step으로 설정해야함-->
 	<bean id="yogultItemProcessor"
 		class="org.iptime.iothome.batch.YogultItemProcessor" scope="step"/>
 

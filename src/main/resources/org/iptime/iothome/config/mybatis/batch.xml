@@ -4,9 +4,9 @@
 
 <mapper namespace="batch">
     
-    <select id="getCycleList" resultType="cycleVo">
-        select *
-          from cycle
+    <select id="getCycleList" resultType="cycleVo" parameterType="map">
+      	select cycle.*, ${ym}
+		  from cycle       
     </select>
     
     <insert id="mergeDaily" parameterType="dailyVo">

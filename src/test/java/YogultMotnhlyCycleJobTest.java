@@ -1,4 +1,6 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +11,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -35,6 +37,13 @@ public class YogultMotnhlyCycleJobTest {
 		JobExecution jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
 		
 		/***then***/
+		//처리된 카운트 조회
+		Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
+		for(StepExecution stepExecution : stepExecutions){
+			stepExecution.getReadCount();	//readCount
+			stepExecution.getWriteCount();	//writeCount
+		}
+		
 		assertEquals(new ExitStatus("COMPLETED"), jobExecution.getExitStatus());
 	}
 }
